@@ -26,17 +26,18 @@ app.use(AV.express());
 
 app.enable('trust proxy');
 // 需要重定向到 HTTPS 可去除下一行的注释。
-// app.use(AV.Cloud.HttpsRedirect());
+app.use(AV.Cloud.HttpsRedirect());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
-});
+// app.get('/', function(req, res) {
+//   res.render('index', { currentTime: new Date() });
+// });
 
 // 可以将一类的路由单独保存在一个文件中
+app.use('/', require('./routes/index'));
 app.use('/todos', require('./routes/todos'));
 
 app.use(function(req, res, next) {
